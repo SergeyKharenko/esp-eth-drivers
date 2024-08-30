@@ -1,3 +1,6 @@
+# Important Statement
+This is a fork, just adds support of new NICs. If you don't need to use these NICs, please refer to [espressif/ethernet_init](https://components.espressif.com/components/espressif/ethernet_init/) !!!
+
 # Component for Ethernet Initialization
 
 This component makes it easier to set up and control Ethernet connections in Espressif IoT projects. It hides the lower-level complexities of Ethernet driver initialization and configuration, so developers can focus on building their applications without delving deep into hardware details.
@@ -9,6 +12,7 @@ Supported devices are:
 * LAN87xx
 * DP83848
 * KSZ80xx
+* CH182
 * SPI Ethernet:
     * DM9051 Module
     * KSZ8851SNL Module
@@ -32,3 +36,4 @@ Supported devices are:
     // Stop and Deinitialize ethernet
     ethernet_deinit_all(eth_handles);
     ```
+

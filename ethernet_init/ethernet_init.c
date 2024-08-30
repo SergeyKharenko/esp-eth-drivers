@@ -31,6 +31,10 @@
 #endif // CONFIG_ETHERNET_USE_ENC28J60
 
 
+#if CONFIG_ETHERNET_PHY_CH182
+#include "esp_eth_phy_ch182.h"
+#endif
+
 #if CONFIG_ETHERNET_SPI_NUMBER
 #define SPI_ETHERNETS_NUM           CONFIG_ETHERNET_SPI_NUMBER
 #else
@@ -195,6 +199,13 @@ static esp_eth_handle_t eth_init_internal(eth_device *dev_out)
 #elif CONFIG_ETHERNET_PHY_LAN867X
     dev_out->phy = esp_eth_phy_new_lan867x(&phy_config);
     sprintf(dev_out->dev_info.name, "LAN867x");
+#elif CONFIG_ETHERNET_PHY_CH182
+#if CONFIG_ETH_RMII_CLK_OUTPUT
+    dev_out->phy = esp_eth_phy_new_ch182_use_esp_refclk(&phy_config);
+#else
+    dev_out->phy = esp_eth_phy_new_ch182(&phy_config);
+#endif
+    sprintf(dev_out->dev_info.name, "CH182");
 #endif
 
     // Init Ethernet driver to default and install it
