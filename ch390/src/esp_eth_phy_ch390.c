@@ -18,32 +18,9 @@
 
 #include "esp_eth_phy_ch390.h"
 
-/**
- * @warning This value is NOT the same as the datasheet!!! Hoping WCH fix it
- * in the furture version!
-*/
 #define CH390_INFO_OUI                       0x1CDC64
 
 #define CH390_INFO_MODEL                     0x01
-
-#define ETH_PHY_PAGE_SEL_REG_ADDR 0x1F
-
-typedef union {
-    struct {
-        uint32_t reserved1 : 3;
-        uint32_t force_link : 1;
-        uint32_t remote_lpbk : 1;
-        uint32_t pcs_lpbk : 1;
-        uint32_t pma_lpbk : 1;
-        uint32_t jabber_en : 1;
-        uint32_t sqe_en : 1;
-        uint32_t reserved2 : 7;
-    };
-    uint32_t val;
-} phy_ctl1_reg_t;
-
-#define ETH_PHY_CTL1_REG_ADDR 0x19
-#define ETH_PHY_CTL1_REG_PAGE 0x00
 
 typedef struct {
     phy_802_3_t phy_802_3;
@@ -116,25 +93,16 @@ static esp_err_t ch390_loopback(esp_eth_phy_t *phy, bool enable)
     phy_802_3_t *phy_802_3 = esp_eth_phy_into_phy_802_3(phy);
     esp_eth_mediator_t *eth = phy_802_3->eth;
     /* Set Loopback function */
-    // Enable PMA loopback in PHY_Control1 register
     bmcr_reg_t bmcr;
-    phy_ctl1_reg_t phy_ctl1;
     ESP_GOTO_ON_ERROR(eth->phy_reg_read(eth, phy_802_3->addr, ETH_PHY_BMCR_REG_ADDR, &(bmcr.val)), err, TAG, "read BMCR failed");
-    ESP_GOTO_ON_ERROR(eth->phy_reg_write(eth, phy_802_3->addr, ETH_PHY_PAGE_SEL_REG_ADDR, ETH_PHY_CTL1_REG_PAGE),
-                      err, TAG, "write PAGE_SEL failed");
-    ESP_GOTO_ON_ERROR(eth->phy_reg_read(eth, phy_802_3->addr, ETH_PHY_CTL1_REG_ADDR, &(phy_ctl1.val)), err, TAG, "read PHY_CTL1 failed");
 
     if (enable) {
         bmcr.en_loopback = 1;
-        phy_ctl1.pma_lpbk = 1;
     } else {
         bmcr.en_loopback = 0;
-        phy_ctl1.pma_lpbk = 0;
     }
+
     ESP_GOTO_ON_ERROR(eth->phy_reg_write(eth, phy_802_3->addr, ETH_PHY_BMCR_REG_ADDR, bmcr.val), err, TAG, "write BMCR failed");
-    ESP_GOTO_ON_ERROR(eth->phy_reg_write(eth, phy_802_3->addr, ETH_PHY_PAGE_SEL_REG_ADDR, ETH_PHY_CTL1_REG_PAGE),
-                      err, TAG, "write PAGE_SEL failed");
-    ESP_GOTO_ON_ERROR(eth->phy_reg_write(eth, phy_802_3->addr, ETH_PHY_CTL1_REG_ADDR, phy_ctl1.val), err, TAG, "write PHY_CTL1 failed");
     return ESP_OK;
 err:
     return ret;
