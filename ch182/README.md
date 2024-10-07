@@ -35,3 +35,15 @@ esp_eth_phy_t *phy = esp_eth_phy_new_ch182_use_esp_refclk(&phy_config);
 
 and use the Ethernet driver as you are used to. For more information of how to use ESP-IDF Ethernet driver, visit [ESP-IDF Programming Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/network/esp_eth.html).
 
+
+## Q&A
+###  REF_CLK Directions
+- **Q:** This driver can automatically setups dir of REF_CLK, will it still works when no REF_CLK is provided by external?
+
+- **A:** Certainly! The driver setup dir by writing `rmii_mode_set1_reg`, which is achieved with the help of the **Station Management Agent(SMA) Interface**. According to the *Technical Reference Manual*, its' clock is generated from the application clock by a clock divider. So it can still work even if no REF_CLK is provided.
+
+## Version History
+| **Version** | **Date** |           **Description**          |
+|:-----------:|:--------:|------------------------------------|
+| 0.0.1       |2024-10-8 | Initial Release                    |
+
