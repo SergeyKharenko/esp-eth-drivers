@@ -7,3 +7,4 @@ dependencies:
   idf: ">=5.1"
 examples:
   - path: ../common_examples/
+url: "https://github.com/SergeyKharenko/esp-eth-drivers/tree/patch_ch182"
