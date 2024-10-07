@@ -7,7 +7,7 @@ dependencies:
   ch390:
     version: '*'
     override_path: '../ch390/'
-  ch182:
+  sergeykharenko/ch182:
     version: '*'
     override_path: '../ch182/'
 examples:
