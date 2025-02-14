@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: 2024 Espressif Systems (Shanghai) CO LTD
+ * SPDX-FileCopyrightText: 2024-2025 Espressif Systems (Shanghai) CO LTD
  *
  * SPDX-License-Identifier: Apache-2.0
  *
- * SPDX-FileContributor: 2023-2024 NanjingQinhengMicroelectronics CO LTD
- * SPDX-FileContributor: 2024 Sergey Kharenko
- * SPDX-FileContributor: 2024 Espressif Systems (Shanghai) CO LTD
+ * SPDX-FileContributor: 2023-2025 NanjingQinhengMicroelectronics CO LTD
+ * SPDX-FileContributor: 2024-2025 Sergey Kharenko
+ * SPDX-FileContributor: 2024-2025 Espressif Systems (Shanghai) CO LTD
  */
 #pragma once
 
